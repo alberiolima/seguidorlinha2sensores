@@ -34,6 +34,9 @@ boolean leituraAnteriorEsquerda = false;
 boolean leituraAnteriorDireita = false;
 
 void setup() {
+  Serial.begin( 9600 ); //Porta serial para debug
+  Serial.println();
+  Serial.println();
   //Define pinos como saída para ponte H
   pinMode(ENA, OUTPUT); 
   pinMode(INT1, OUTPUT); 
@@ -46,6 +49,7 @@ void setup() {
   pinMode( sensorEsquerda, INPUT_PULLUP );
   pinMode( sensorDireita, INPUT_PULLUP );
 
+  Serial.println( "Aguardando 3 segundos para ligar os motores" );
   delay(3000); //Aguarda um tempo depois de ligado o carrinho para poder ligar os motore
   
   //Liga inicialmente os dois motores na mesma velocidade, necessário quando quiser colocar o carro fora da linha
@@ -58,10 +62,16 @@ void setup() {
 }
 
 void loop() {
-  //boolean valorSensorEsquerda = ( analogRead( sensorEsquerda ) > 200 ); //Converte valor analogico para digital, necessario apenas se usar sensor analogico
-  //boolean valorSensorDireita = ( analogRead( sensorDireita ) > 200 );
-  boolean valorSensorEsquerda = (boolean)analogRead( sensorEsquerda ); 
-  boolean valorSensorDireita =  (boolean)analogRead( sensorDireita );
+  boolean valorSensorEsquerda = ( analogRead( sensorEsquerda ) > 200 ); //Converte valor analogico para digital, necessario apenas se usar sensor analogico
+  boolean valorSensorDireita = ( analogRead( sensorDireita ) > 200 );
+  //boolean valorSensorEsquerda = (boolean)analogRead( sensorEsquerda ); 
+  //boolean valorSensorDireita =  (boolean)analogRead( sensorDireita );
+
+  Serial.print( "Sensores esquerda: " );
+  Serial.print( valorSensorEsquerda );
+  Serial.print( " direita: " );
+  Serial.print( valorSensorEsquerda );
+  Serial.println();
 
   if (!valorSensorEsquerda&&!valorSensorDireita){ //*** dois sensores fora da linha
     valorSensorEsquerda = leituraAnteriorEsquerda; //Usa dados da leitura anterior, necessário 
